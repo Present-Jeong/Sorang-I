@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 파이썬 머신러닝 라이브러리인 scikitlearn 패키지에서 LinearRegression모듈 가져오기
+from sklearn.linear_model import LinearRegression
+
+X = np.array([[1],[2],[3],[4]]) #(X변수가 여러개일때 다중회귀분석 위해)X는 2차원 array 형태여야함.
+y = np.dot(X,np.array([5]))+3
+reg = LinearRegression().fit(X,y)   #LinearRegression모델을 생성하고 모델에 X,y값 적용(fit)
+print(reg.score(X,y))   #1.0
+
+print(reg.coef_)    #기울기:[5.0]
+print(reg.intercept_)   #절편:3.0 (2.9999999999999964)
+print(reg.predict(np.array([[5]]))) #새로운 값을 넣어 y값 예측:[28.]
+
+#matplotlib로 그래프 그리기
+%matplotlib inline
+
+plt.title('Linear Regression')
+plt.plot(X,y,'.')   #(X,y)를 '.'으로 표시
+legends = ['train']
+for i, x_test in enumerate([5,6,7,11]):
+    plt.plot([x_test],reg.predict(np.array([[x_test]])),'o')    #(test값,예측값)을 'o'로 표시
+    legends.append('test'+str(i+1))
+
+plt.legend(legends)
+
+plt.show()
